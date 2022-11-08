@@ -1,0 +1,36 @@
+
+public class Main {
+
+    public static void main(String[] args) {
+        long number = 0;
+        int howMany = 0;
+	    for (int i = 10; i < 10000; i++){
+            int j = 1;
+            boolean palindrome = false;
+            number = i;
+            while (j <= 50){
+                number = number + reverse(number);
+//                System.out.println(number);
+                if (number == reverse(number)){
+                    palindrome = true;
+                    break;
+                }
+                j++;
+            }
+            if (palindrome== false){
+                howMany++;
+                System.out.println(howMany + "  i = " + i);
+            }
+        }
+    }
+
+    public static long reverse (long number){
+        String n = Long.toString(number);
+        long Rev = 0;
+        for (int j = n.length(); j >= 1; j--) {
+            Rev = Rev + (number % 10) * ((long) Math.pow(10, j - 1));
+            number = number / 10;
+        }
+        return Rev;
+    }
+}
