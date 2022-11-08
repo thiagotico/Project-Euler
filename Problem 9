@@ -1,0 +1,15 @@
+public class Main {
+
+    public static void main(String[] args) {
+        for (int m = 2; m < 1000; m++){
+            for (int n = 3; n < 1000; n++){
+                if (n <= m){
+                    n = m + 1;
+                }
+                if (n*n - m*m + 2*m*n + m*m + n*n == 1000){
+                    System.out.println((n*n - m*m) + "  " + (2*m*n) + "  " + (m*m + n*n));
+                }
+            }
+        }
+    }
+}
