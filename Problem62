@@ -1,0 +1,18 @@
+public class Main {
+    public static void main(String args[])
+    {
+        HeapAlgo obj = new HeapAlgo(); //Heap Algorithm it's on another class
+        for (long i = 1; i < 5000; i++) {
+            String number = Long.toString(i * i * i);
+            long a[] = new long[number.length() + 5];
+            long b[] = new long [7];
+            for (int j = 0; j < number.length(); j++){
+                a[j] = Long.parseLong(number.substring(j, j+1));
+//                System.out.println(a[j]);
+            }
+            a[a.length-1] = i;
+            obj.heapPermutation(b, a, a.length - 5, a.length - 5);
+        }
+
+    }
+}
