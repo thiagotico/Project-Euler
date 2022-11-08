@@ -1,0 +1,45 @@
+import java.util.Arrays;
+
+public class Main {
+
+    public static void main(String[] args) {
+        boolean flag = false;
+        int veri = 0;
+        for (int i = 1; i < 10000; i++) {
+            String number = "";
+            for (int j = 1; j < 9; j++) {
+                number = number + j * i;
+                if (number.length() > 9){
+                    break;
+                }
+                if (isPan(Integer.parseInt(number)) && Integer.parseInt(number) > veri){
+                    veri = Integer.parseInt(number);
+                    System.out.println(veri);
+                }
+            }
+        }
+    }
+    public static boolean isPan (int i){
+        boolean flag = false;
+        long number = 0;
+        int cont = 0;
+        int[] decimals = new int[Integer.toString(i).length()];
+        number = i;
+        for (int j = 0; j < 11; j++) {
+            cont = j;
+            decimals[j] = (int) (number % 10);
+            number = number / 10;
+            if (number == 0) {
+                break;
+            }
+        }
+        boolean ordem = true;
+        Arrays.sort(decimals);
+        for (int j = 0; j <= cont; j++) {
+            if (decimals[j] != j + 1) {
+                ordem = false;
+            }
+        }
+        return ordem;
+    }
+}
