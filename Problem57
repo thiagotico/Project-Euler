@@ -1,0 +1,35 @@
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+public class Main {
+
+    public static void main(String[] args) {
+	    squareRoot(2);
+    }
+    public static void squareRoot (long n){
+        long sum = 0;
+        BigDecimal den = new BigDecimal("2");
+        BigDecimal tempDen = new BigDecimal("1");
+        BigDecimal tempDen2 = new BigDecimal("0");
+        BigDecimal tempNum = new BigDecimal("1");
+        BigDecimal tempNum2 = new BigDecimal("7");
+        BigDecimal num = new BigDecimal("3");
+        for (int i = 2; i <= 1000; i++){
+            tempDen2 = tempDen;
+            tempDen = den;
+            den = den.multiply(BigDecimal.valueOf(2));
+            den = den.add(tempDen2);
+            tempNum2 = tempNum;
+            tempNum = num;
+            num = num.multiply(BigDecimal.valueOf(2));
+            num = num.add(tempNum2);
+            String number1 = num.toString();
+            String number2 = den.toString();
+            if (number1.length() > number2.length()){
+                sum ++;
+                System.out.println(sum);
+            }
+        }
+    }
+}
