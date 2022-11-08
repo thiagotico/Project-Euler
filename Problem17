@@ -1,0 +1,68 @@
+public class Main {
+    static String [] less10 = new String[10];
+    static String [] teen = new String[21];
+    static String [] less100 = new String[10];
+    static String [] all = new String[1001];
+
+    public static void main(String[] args) {
+        getName();
+        for (int i = 1; i < 1000; i++){
+            if (i < 10){
+                all[i] = less10[i];
+            }else if (i >= 10 && i < 20){
+                all[i] = teen[i];
+            }else if (i >= 20 && i < 100){
+                all[i] = less100[i/10] + less10[i%10];
+            }
+        }
+        for (int i = 100; i < 1000; i++){
+            if (i%100 == 0){
+                all[i] = less10[i/100] + "hundred";
+                continue;
+            }
+            all[i] = less10[i/100] + "hundredand" + all[i%100];
+        }
+        System.out.println(countLetters());
+    }
+    public static int countLetters (){
+        int sum = 0;
+        for (int i = 1; i <= 1000; i++){
+            sum = sum + all[i].length();
+            System.out.println(all[i]);
+        }
+        System.out.println(all[342].length());
+        return sum;
+    }
+    public static void getName(){
+        less10[0] = "";
+        less10[1] = "one";
+        less10[2] = "two";
+        less10[3] = "three";
+        less10[4] = "four";
+        less10[5] = "five";
+        less10[6] = "six";
+        less10[7] = "seven";
+        less10[8] = "eight";
+        less10[9] = "nine";
+        teen[10] = "ten";
+        teen[11] = "eleven";
+        teen[12] = "twelve";
+        teen[13] = "thirteen";
+        teen[14] = "fourteen";
+        teen[15] = "fifteen";
+        teen[16] = "sixteen";
+        teen[17] = "seventeen";
+        teen[18] = "eighteen";
+        teen[19] = "nineteen";
+        less100[0] = "";
+        less100[2] = "twenty";
+        less100[3] = "thirty";
+        less100[4] = "forty";
+        less100[5] = "fifty";
+        less100[6] = "sixty";
+        less100[7] = "seventy";
+        less100[8] = "eighty";
+        less100[9] = "ninety";
+        all[1000] = "onethousand";
+    }
+}
