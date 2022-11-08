@@ -1,0 +1,26 @@
+public class Main {
+
+    public static void main(String[] args) {
+        int total = 0;
+        int veriTotal = 0;
+        for (int n = 1; n <= 1000; n++) {
+            total = 0;
+            for (int m = 3; m <= 1000; m++) {
+                for (int i = 3; i <= 1000; i++) {
+                    for (int j = i + 1; j <= 1000; j++) {
+                        if (i + j + m > n) {
+                            break;
+                        }
+                        if (i * i + j * j == m * m && i + j + m == n) {
+                            total = total + 1;
+                        }
+                    }
+                }
+                if (total > veriTotal) {
+                    veriTotal = total;
+                    System.out.println(n + " " + total);
+                }
+            }
+        }
+    }
+}
