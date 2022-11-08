@@ -1,0 +1,78 @@
+public class Main<howManyPrimes> {
+    private static final int biggestPrime = 100999999;
+    private static final int howManyPrimes = 10000;
+    public static int[] primes = new int[howManyPrimes + 1];
+    public static void main(String[] args) {
+        getPrimes();
+        int trian = 1;
+        int divs = 0;
+        while (true){
+            divs = numDiv(trian * (trian + 1)/2);
+            if (divs > 500){
+                System.out.println(trian * (trian + 1)/2);
+                break;
+            }
+            trian ++;
+        }
+
+    }
+    public static int numDiv (int num){
+        int divs = 1;
+        int divsMul = 1;
+        int numTest = num;
+        for (int i = 1; i <= howManyPrimes; i++){
+            if ((primes[i] >= Math.sqrt(numTest) && num == numTest) || (num == 1)){
+                break;
+            }
+            if (num % primes[i] == 0){
+                while (num % primes[i] == 0){
+                    num = num / primes[i];
+                    divsMul ++;
+                }
+                divs = divsMul * divs;
+                divsMul = 1;
+            }
+        }
+        return divs;
+    }
+    public static void getPrimes (){
+        primes[0] = 1;
+        primes[1] = 2;
+        primes[2] = 3;
+        primes[3] = 5;
+        primes[4] = 7;
+        int j = 5;
+        for (int i = 11; primes[howManyPrimes] == 0; i = i + 2){
+            if (isPrime(i)){
+                primes[j] = i;
+                if (biggestPrime != 0) {
+                    if (primes[j] > biggestPrime) {
+                        primes[j] = 0;
+                        break;
+                    }
+                }
+                j++;
+            }
+        }
+    }
+
+    public static boolean isPrime (int test){
+        if (test % 2 == 0){
+            return false;
+        }
+        for (int i = 1; primes [i] <= Math.sqrt(test); i++) {
+            if (primes[i] == 0){
+                for (int j = 3; j <= Math.sqrt(test); j = j + 2) {
+                    if (test % j == 0){
+                        return false;
+                    }
+                }
+                return true;
+            }
+            if (test % primes[i] == 0){
+                return false;
+            }
+        }
+        return true;
+    }
+}
