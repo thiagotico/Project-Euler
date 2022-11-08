@@ -1,0 +1,107 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class Main {
+
+    public static void main(String[] args) {
+        int sum = 0;
+        for (int i = 1; i <= 1786; i++){
+            if (isTriangle(i)){
+                sum++;
+            }
+        }
+        System.out.println(sum);
+    }
+    public static boolean isTriangle (int position){
+        long triangularInt = (int) ((1 + Math.sqrt(1 + 8 * nameValue(position)))/2);
+        double triangularDouble = ((1 + Math.sqrt(1 + 8 * nameValue(position)))/2);
+        if (triangularDouble == triangularInt){
+            return true;
+        }
+        return false;
+    }
+    public static int nameValue (int position){
+        String name = name(position);
+        int value = 0;
+        for (int j = 0; j < name.length(); j++) {
+            char a = name.substring(j, j + 1).charAt(0);
+            value = value + (int) a - 64;
+        }
+        return value;
+    }
+    public static String name (int position){
+        if (position > 1786){
+            return null;
+        }
+        if (position == 1786){
+            return "YOUTH";
+        }
+        String names = returnTxt(1);
+        if (position == 1){
+            return "A";
+        }
+        position = position - 1;
+        int cont = 1;
+        int j = 0;
+        while (cont <= position) {
+            char a = names.substring(j, j+1).charAt(0);
+            if ((int) a == 44){
+                cont ++;
+            }
+            j++;
+        }
+        j++;
+        char a = names.substring(j, j+1).charAt(0);
+        String name = "";
+        while ((int) a != 44) {
+            a = names.substring(j+2, j+3).charAt(0);
+            name = name + names.substring(j, j + 1);
+            j++;
+        }
+        return name;
+    }
+    public static String returnTxt (int i) {
+
+        // The name of the file to open.
+        String fileName = "temp.txt";
+
+        // This will reference one line at a time
+        String line = null;
+
+        try {
+            // FileReader reads text files in the default encoding.
+            FileReader fileReader =
+                    new FileReader(fileName);
+
+            // Always wrap FileReader in BufferedReader.
+            BufferedReader bufferedReader =
+                    new BufferedReader(fileReader);
+            int cont = 1;
+            while((line = bufferedReader.readLine()) != null) {
+                if (cont == i){
+                    return line;
+                }
+
+                cont ++;
+            }
+
+            // Always close files.
+            bufferedReader.close();
+        }
+        catch(FileNotFoundException ex) {
+            System.out.println(
+                    "Unable to open file '" +
+                            fileName + "'");
+        }
+        catch(IOException ex) {
+            System.out.println(
+                    "Error reading file '"
+                            + fileName + "'");
+            // Or we could just do this:
+            // ex.printStackTrace();
+        }
+        return "-1";
+    }
+}
