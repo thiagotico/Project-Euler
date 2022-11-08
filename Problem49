@@ -1,0 +1,120 @@
+import java.util.Arrays;
+public class Main {
+
+    public static void main(String[] args) {
+
+        int howManyPrimes = 10000;
+        int size = 1060;
+        int[] matrixPrimes = retornaPrimos(howManyPrimes);
+        int [] matrix = new int[1061];
+        int [] terms1 = new int [4];
+        int [] terms2 = new int [4];
+        int [] terms3 = new int [4];
+        int [] termsByTerms = new int[12];
+        int cont = 0;
+        int terms = 0;
+        for (int i = 169; i <= 1228; i++){
+            matrix[cont] = matrixPrimes[i];
+            cont++;
+        }
+        for (int i = 0; i <= size; i++){
+            for (int j = 0; j <= size; j++){
+                boolean isPrime = false;
+                if (((matrix[i] + matrix[j]) % 2 == 0) && (i != j)){
+                    for (int w = 0; w <= size; w++){
+                        if ((matrix[i] + matrix[j]) / 2 == matrix[w]){
+//                            System.out.println(matrix[i] + "   " + matrix[w] + "   " + matrix[j]);
+                            terms = matrix[i];
+                            for(int h = 0; h < 4; h++){
+                                terms1[h] = terms % 10;
+                                terms = terms/10;
+                            }
+                            terms = matrix[w];
+                            for(int h = 0; h < 4; h++){
+                                terms2[h] = terms % 10;
+                                terms = terms/10;
+                            }
+                            terms = matrix[j];
+                            for(int h = 0; h < 4; h++){
+                                terms3[h] = terms % 10;
+                                terms = terms/10;
+                            }
+                            Arrays.sort(terms1);
+                            Arrays.sort(terms2);
+                            Arrays.sort(terms3);
+                            boolean sort = true;
+                            for (int h = 0; h < 4; h++){
+                                if ((terms1[h] != terms2[h]) || (terms1[h] != terms3[h]) || (terms2[h] != terms3[h])){
+                                    sort = false;
+                                    break;
+                                }
+                            }
+                            if (sort){
+                                System.out.println(matrix[i] + "   " + matrix[w] + "   " + matrix[j]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+//        for (int i = 1; i < 10000; i++){
+//            if (matrixPrimes[i] > 1000){
+//                System.out.println(matrixPrimes[i] + "  " + i);
+//                break;
+//            }
+//        }
+//        for (int i = 1; i < 10000; i++){
+//            if (matrixPrimes[i] > 10000){
+//                System.out.println(matrixPrimes[i] + "  " + i);
+//                break;
+//            }
+//        }
+    }
+    public static int[] retornaPrimos(int howManyPrimes) {
+        int[] primeMatrix;
+        primeMatrix = new int[howManyPrimes];
+        boolean teste = true;
+        boolean teste2 = false;
+        int cont = 5;
+        int test = 11;
+        primeMatrix[0] = 1;
+        primeMatrix[1] = 2;
+        primeMatrix[2] = 3;
+        primeMatrix[3] = 5;
+        primeMatrix[4] = 7;
+        if (howManyPrimes == 5) {
+            return primeMatrix;
+        }
+        while (true) {
+            teste = true;
+            teste2 = false;
+            for (int j = 1; primeMatrix[j] <= Math.sqrt(test); j++) {
+                if (primeMatrix[j] == 0) {
+                    teste2 = true;
+                    break;
+                }
+                if (test % primeMatrix[j] == 0) {
+                    teste = false;
+                }
+            }
+            if (teste2 == true) {
+                for (int j = 3; j <= Math.sqrt(test); j = j + 2) {
+                    if (test % j == 0) {
+                        teste = false;
+                    }
+                }
+            }
+            if (teste == true) {
+                primeMatrix[cont] = test;
+//                System.out.println(cont);
+                if (cont == howManyPrimes - 1) {
+                    break;
+                }
+                cont++;
+            }
+            test = test + 2;
+        }
+//        System.out.println(primeMatrix[howManyPrimes - 1]);
+        return primeMatrix;
+    }
+}
