@@ -1,0 +1,156 @@
+import java.lang.reflect.Array;
+import java.util.Arrays;
+public class Main {
+
+    public static void main(String[] args) {
+        for (int i = 11; i < 100; i++){
+//            System.out.println(i);
+            if (i % 10 == 0){
+                continue;
+            }
+            for (int j = 11; j < 100; j ++){
+                if (j % 10 == 0){
+                    continue;
+                }
+                int num1 = joinNumber(i, j);
+                if (cyclical(num1) == false){
+                    continue;
+                }
+                for (int k = 11; k < 100; k ++){
+//                    System.out.println(k);
+                    if (k % 10 == 0){
+                        continue;
+                    }
+                    int num2 = joinNumber(j, k);
+                    if (cyclical(num2) == false){
+                        continue;
+                    }
+                    for (int l = 11; l < 100; l ++){
+                        if (l % 10 == 0){
+                            continue;
+                        }
+                        int num3 = joinNumber(k, l);
+                        if (cyclical(num3) == false){
+                            continue;
+                        }
+                        for (int m = 11; m < 100; m ++) {
+                            if (m % 10 == 0) {
+                                continue;
+                            }
+                            int num4 = joinNumber(l, m);
+                            if (cyclical(num4) == false){
+                                continue;
+                            }
+                            for (int n = 11; n < 100; n ++) {
+                                if (n % 10 == 0) {
+                                    continue;
+                                }
+                                int num5 = joinNumber(m, n);
+                                if (cyclical(num5) == false){
+                                    continue;
+                                }
+                                for (int o = 11; o < 100; o ++) {
+                                    if (o % 10 == 0) {
+                                        continue;
+                                    }
+                                    if (o != i){
+                                        continue;
+                                    }
+                                    int num6 = joinNumber(n, o);
+                                    if (cyclical(num6) == false){
+                                        continue;
+                                    }else {
+                                        int matrix [] = new int[6];
+                                        matrix[0] = num1 ;
+                                        matrix[1] = num2 ;
+                                        matrix[2] = num3 ;
+                                        matrix[3] = num4 ;
+                                        matrix[4] = num5 ;
+                                        matrix[5] = num6 ;
+                                        for (int p = 0; p <= 5; p++){
+                                            double octagonal = (int) (2 + Math.sqrt(4 + 12*matrix[p]))/6;
+                                            double octagonalF = (2 + Math.sqrt(4 + 12*matrix[p]))/6;
+                                            if (octagonal == octagonalF){
+                                                System.out.println(matrix[p]);
+                                                matrix[p] = 0;
+                                                Arrays.sort(matrix);
+                                                for (int q = 1; q <= 5; q++){
+                                                    double heptagonal = (int) (3 + Math.sqrt(9 + 40*matrix[q]))/10;
+                                                    double heptagonalF = (3 + Math.sqrt(9 + 40*matrix[q]))/10;
+                                                    if (heptagonal == heptagonalF){
+                                                        System.out.println(matrix[q]);
+                                                        matrix[q] = 0;
+                                                        Arrays.sort(matrix);
+                                                        for (int r = 2; r <= 5; r++){
+                                                            double hexagonal = (int) (1 + Math.sqrt(1 + 8*matrix[r]))/4;
+                                                            double hexagonalF = (1 + Math.sqrt(1 + 8*matrix[r]))/4;
+                                                            if (hexagonal == hexagonalF) {
+                                                                System.out.println(matrix[r]);
+                                                                matrix[r] = 0;
+                                                                Arrays.sort(matrix);
+                                                                for (int s = 3; s <= 5; s++) {
+                                                                    double pentagonal = (int) (1 + Math.sqrt(1 + 24 * matrix[s])) / 6;
+                                                                    double pentagonalF = (1 + Math.sqrt(1 + 24 * matrix[s])) / 6;
+                                                                    if (pentagonal == pentagonalF) {
+                                                                        System.out.println(matrix[s]);
+                                                                        matrix[s] = 0;
+                                                                        Arrays.sort(matrix);
+                                                                        for (int t = 4; t <= 5; t++) {
+                                                                            double square = (int) Math.sqrt(matrix[t]);
+                                                                            double squareF = Math.sqrt(matrix[t]);
+                                                                            if (square == squareF) {
+                                                                                System.out.println(matrix[t]);
+                                                                                matrix[t] = 0;
+                                                                                Arrays.sort(matrix);
+                                                                                for (int u = 5; u <= 5; u++) {
+                                                                                    double triangle = (int) (1 + Math.sqrt(1 + 8*matrix[u]))/2;
+                                                                                    double triangleF = (1 + Math.sqrt(1 + 8*matrix[u]))/2;
+                                                                                    if (triangle == triangleF){
+                                                                                        System.out.println(num1 + "  " +num2 + "  " +num3 + "  " +num4 + "  " +num5 + "  " +num6 + "  ");
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public static int joinNumber (int number1, int number2){
+        String num1 = Integer.toString(number1);
+        String num2 = Integer.toString(number2);
+        return Integer.parseInt(num1 + num2);
+    }
+    public static boolean cyclical (int number){
+        double triangle = (int) (1 + Math.sqrt(1 + 8*number))/2;
+        double square = (int) Math.sqrt(number);
+        double pentagonal = (int) (1 + Math.sqrt(1 + 24*number))/6;
+        double hexagonal = (int) (1 + Math.sqrt(1 + 8*number))/4;
+        double heptagonal = (int) (3 + Math.sqrt(9 + 40*number))/10;
+        double octagonal = (int) (2 + Math.sqrt(4 + 12*number))/6;
+        double triangleF = (1 + Math.sqrt(1 + 8*number))/2;
+        double squareF = Math.sqrt(number);
+        double pentagonalF = (1 + Math.sqrt(1 + 24*number))/6;
+        double hexagonalF = (1 + Math.sqrt(1 + 8*number))/4;
+        double heptagonalF = (3 + Math.sqrt(9 + 40*number))/10;
+        double octagonalF = (2 + Math.sqrt(4 + 12*number))/6;
+        if ((triangle == triangleF) || (square == squareF) || (pentagonal == pentagonalF) || (hexagonal == hexagonalF) || (heptagonal == heptagonalF) || (octagonal == octagonalF)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+}
