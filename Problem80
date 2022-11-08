@@ -1,0 +1,48 @@
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+public class Main {
+
+    public static void main(String[] args) {
+	    int sum = 0;
+        for (double i = 1; i <= 100; i++){
+            if (isPerfectSquare(i)){
+                continue;
+            }
+            sum = sum + squareRootandSum((int) i);
+        }
+        System.out.println(sum);
+    }
+    public static int squareRootandSum (long n){
+        BigDecimal temp = new BigDecimal("0");
+        BigDecimal den = new BigDecimal("1");
+        BigDecimal num = new BigDecimal(Integer.toString((int) Math.sqrt(n)));
+        for (int i = 0; i <= 7; i++){
+            temp = den;
+            den = den.multiply(num);
+            den = den.multiply(BigDecimal.valueOf(2));
+            num = num.multiply(num);
+            temp = temp.multiply(temp);
+            temp = temp.multiply(BigDecimal.valueOf(n));
+            num = num.add(temp);
+        }
+        BigDecimal div = num;
+        div = div.divide(den, 101, RoundingMode.HALF_EVEN);
+        div = div.multiply(BigDecimal.valueOf(Math.pow(10, 99)));
+
+        String number = div.toString();
+        number = number.substring(0,100);
+        int sum = 0;
+        for (int i = 0; i <= 99; i++) {
+            sum = sum + Integer.parseInt(number.substring(i, i + 1));
+        }
+        return sum;
+    }
+    public static boolean isPerfectSquare (double i){
+        int temp = (int) Math.sqrt(i);
+        if (i == temp*temp){
+            return true;
+        }
+        return false;
+    }
+}
