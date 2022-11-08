@@ -1,0 +1,318 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Arrays;
+
+public class Main {
+    public static int[] hand1 = new int[6];
+    public static int[] hand2 = new int[6];
+    public static void main(String[] args) {
+        int win = 0;
+        for (int cont = 1; cont <= 1000; cont++) {
+            String line = returnMatrix(cont);
+            hand1 = hand(line, 0);
+            hand2 = hand(line, 1);
+            System.out.println("numero = " + cont);
+            System.out.println("hand 1");
+            for (int i = 0; i < 5; i++) {
+                System.out.println(hand1[i]);
+            }
+            System.out.println("hand 2");
+            for (int i = 0; i < 5; i++) {
+                System.out.println(hand2[i]);
+            }
+            System.out.println("naipado 1 = " + hand1[5] + " naipado 2 = " + hand2[5]);
+            if (handValue(hand1, 1) > handValue(hand2, 2)) {
+                win++;
+                System.out.println("1 win");
+                System.out.println("Win = " + win);
+            }else if (handValue(hand1, 1) < handValue(hand2, 2)) {
+                System.out.println("2 win");
+            }else if ((handValue(hand1, 1) == handValue(hand2, 2)) && (handValue(hand1, 1) == 1)){
+                int temp1 = 0;
+                int temp2 = 0;
+                for (int i = 0; i < 5; i++){
+                    if (hand1[i] == hand1[i+1]){
+                        temp1 = hand1[i];
+                    }
+                    if (hand2[i] == hand2[i+1]){
+                        temp2 = hand2[i];
+                    }
+                }
+                if (temp1 > temp2){
+                    win++;
+                    System.out.println("1 win");
+                    System.out.println("Win = " + win);
+                }else if (temp2 > temp1){
+                    System.out.println("2 win");
+                }
+                if (temp1 == temp2){
+                    if (highCard(hand1, hand2) == 1){
+                        win++;
+                        System.out.println("1 win");
+                        System.out.println("Win = " + win);
+                    }else {
+                        System.out.println("2 win");
+                    }
+                }
+                continue;
+            }else if ((handValue(hand1, 1) == handValue(hand2, 2))){
+                if (highCard(hand1, hand2) == 1){
+                    win++;
+                    System.out.println("1 win");
+                }else {
+                    System.out.println("2 win");
+                }
+            }
+            System.out.println("Win = " + win);
+        }
+    }
+    public static int[] hand (String line, int handNum){
+        int[] hand = new int[6];
+        hand[5] = 1000;
+        if (handNum == 0) {
+            for (int i = 0; i < 5; i++) {
+                hand[i] = realNum(line.substring(i*3, i*3 + 1));
+                if ((i != 4) && (hand[5] != 100)){
+                    if ((!line.substring(i*3 + 1, i*3 + 2).equals(line.substring((i + 1) *3 + 1, (i + 1) * 3 + 2)))){
+                        hand[5] = 100;
+                    }
+                }
+            }
+        }
+        if (handNum == 1){
+            for (int i = 0; i < 5; i++) {
+                hand[i] = realNum(line.substring(15 + i*3, 15 + i*3 + 1));
+                if ((i != 4) && (hand[5] != 100)){
+                    if ((!line.substring(15 + i*3 + 1, 15 + i*3 + 2).equals(line.substring(15 + (i + 1) *3 + 1, 15 + (i + 1) * 3 + 2)))){
+                        hand[5] = 100;
+                    }
+                }
+            }
+        }
+        Arrays.sort(hand);
+        int[] handBack = new int [6];
+        for (int i = 0; i < 5; i++){
+            handBack[i] = hand[4-i];
+        }
+        handBack[5] = hand[5];
+        return handBack;
+    }
+    public static int highCard (int[] hand1, int[] hand2){
+        for (int i = 0; i < 5; i++){
+            if (hand1[i] > hand2[i]){
+                return 1;
+            }
+            if (hand1[i] < hand2[i]){
+                return 2;
+            }
+        }
+        return 1;
+    }
+    public static int handValue (int[] hand, int handNum){
+        boolean isStraightFlush = true;
+        if (hand[5] != 1000){
+            isStraightFlush = false;
+        }else{
+            int straight = 0;
+            if ((hand[0] == 14) && (hand[4] == 2)){
+                for (int i = 1; i < 4; i++){
+                    if (hand[i] - 1 == hand[i+1]){
+                        straight ++;
+                    }
+                }
+            }
+            if (straight == 3){
+                return 8;
+            }
+            straight = 0;
+            for (int i = 0; i < 4; i++){
+                if (hand[i] - 1 == hand[i+1]){
+                    straight ++;
+                }
+            }
+            if (straight == 4){
+                return 4;
+            }
+        }
+        int quads = 0;
+        for (int i = 0; i < 3; i++){
+            if (hand[i] == hand[i+1]){
+                quads++;
+            }
+        }
+        if (quads == 3){
+            return 7;
+        }
+        quads = 0;
+        for (int i = 1; i < 4; i++){
+            if (hand[i] == hand[i+1]){
+                quads++;
+            }
+        }
+        if (quads == 3){
+            return 7;
+        }
+        int fullHouse = 0;
+        for (int i = 0; i < 4; i++){
+            if (hand[i] == hand[i+1]){
+                fullHouse ++;
+            }
+        }
+        if ((fullHouse == 3)){
+            if (handNum == 1) {
+                if (hand[1] != hand[2]) {
+                    hand1[0] = hand[4];
+                    hand1[1] = hand[4];
+                    hand1[2] = hand[4];
+                    hand1[3] = hand[0];
+                    hand1[4] = hand[0];
+                }
+            }
+            if (handNum == 2) {
+                if (hand[1] != hand[2]) {
+                    hand2[0] = hand[4];
+                    hand2[1] = hand[4];
+                    hand2[2] = hand[4];
+                    hand2[3] = hand[0];
+                    hand2[4] = hand[0];
+                }
+            }
+            return 6;
+        }
+        if (hand[5] == 1000){
+            return 5;
+        }
+        int straight = 0;
+        if ((hand[0] == 14) && (hand[4] == 2)){
+            for (int i = 1; i < 4; i++){
+                if (hand[i] - 1 == hand[i+1]){
+                    straight ++;
+                }
+            }
+            int b = 0;
+        }
+        if (straight == 3){
+            return 4;
+        }
+        straight = 0;
+        for (int i = 0; i < 4; i++){
+            if (hand[i] - 1 == hand[i+1]){
+                straight ++;
+            }
+        }
+        if (straight == 4){
+            return 4;
+        }
+        int three = 0;
+        for (int i = 0; i < 3; i++){
+            three = 0;
+            for (int j = 0; j < 2; j++){
+                if (hand[i+j] == hand[i+j+1]){
+                    three ++;
+                }
+            }
+        }
+        if (three == 2){
+            return 3;
+        }
+        int twoPair = 0;
+        for (int i = 0; i < 4; i++){
+            if (hand[i] == hand[i+1]){
+                twoPair++;
+            }
+        }
+        int temp = 0;
+        if (twoPair == 2){
+            if ((hand[0] != hand[1]) && (hand[1] == hand[2])){
+                if (handNum == 1) {
+                    hand1[0] = hand[1];
+                    hand1[1] = hand[2];
+                    hand1[2] = hand[3];
+                    hand1[3] = hand[4];
+                    hand1[4] = hand[0];
+                }
+                if (handNum == 2) {
+                    hand2[0] = hand[1];
+                    hand2[1] = hand[2];
+                    hand2[2] = hand[3];
+                    hand2[3] = hand[4];
+                    hand2[4] = hand[0];
+                }
+            }
+            return 2;
+        }
+        int pair = 0;
+        for (int i = 0; i < 4; i++){
+            if (hand[i] == hand[i+1]){
+                pair++;
+            }
+        }
+        if (pair == 1){
+            return 1;
+        }
+        return 0;
+    }
+    public static int realNum (String a){
+        int num = 0;
+        if (a.equals("T")){
+            return 10;
+        }
+        if (a.equals("J")){
+            return 11;
+        }
+        if (a.equals("Q")){
+            return 12;
+        }
+        if (a.equals("K")){
+            return 13;
+        }
+        if (a.equals("A")){
+            return 14;
+        }
+        return Integer.parseInt(a);
+    }
+    public static String returnMatrix (int i) {
+
+        // The name of the file to open.
+        String fileName = "temp.txt";
+
+        // This will reference one line at a time
+        String line = null;
+
+        try {
+            // FileReader reads text files in the default encoding.
+            FileReader fileReader =
+                    new FileReader(fileName);
+
+            // Always wrap FileReader in BufferedReader.
+            BufferedReader bufferedReader =
+                    new BufferedReader(fileReader);
+            int cont = 1;
+            while((line = bufferedReader.readLine()) != null) {
+                if (cont == i){
+                    return line;
+                }
+
+                cont ++;
+            }
+
+            // Always close files.
+            bufferedReader.close();
+        }
+        catch(FileNotFoundException ex) {
+            System.out.println(
+                    "Unable to open file '" +
+                            fileName + "'");
+        }
+        catch(IOException ex) {
+            System.out.println(
+                    "Error reading file '"
+                            + fileName + "'");
+            // Or we could just do this:
+            // ex.printStackTrace();
+        }
+        return "-1";
+    }
+}
