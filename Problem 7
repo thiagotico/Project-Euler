@@ -1,0 +1,24 @@
+public class Main {
+
+    public static void main(String[] args) {
+	    int primeNumPos = 9;
+	    int numTestPrime = 29;
+	    while (true){
+	        boolean isPrime = true;
+	        for (int i = 3; i <= Math.sqrt(numTestPrime); i = i + 2){
+	            if (numTestPrime % i == 0){
+	                isPrime = false;
+	                break;
+                }
+            }
+			if (isPrime){
+				primeNumPos++;
+			}
+			if (primeNumPos == 10001){
+				System.out.println(numTestPrime);
+				break;
+			}
+			numTestPrime = numTestPrime + 2;
+        }
+    }
+}
