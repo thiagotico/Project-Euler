@@ -1,0 +1,188 @@
+public class Main {
+    public static void main(String[] args) {
+        int howManyPrimes = 100000;
+        int size = howManyPrimes - 1;
+        int[] matrixPrimes = retornaPrimos(howManyPrimes);
+        System.out.println(matrixPrimes[size]);
+        int number = 0;
+        int sum = 0;
+        boolean isPrimeBig = true;
+        int l = 0;
+        int m = 0;
+        int r = howManyPrimes;
+        for (int i = 5; i <= size; i++){
+//            System.out.println(matrixPrimes[i]);
+            String num = Integer.toString(matrixPrimes[i]);
+            if (matrixPrimes[i] < 100){
+                int number1 = matrixPrimes[i]/10;
+                int number2 = matrixPrimes[i]%10;
+                l = 0;
+                m = 0;
+                r = howManyPrimes;
+                isPrimeBig = false;
+                if (number1 == 1 || number2 == 1){
+                    continue;
+                }
+                while (l <= r) {
+                    m = (l + r) / 2;
+                    if (matrixPrimes[m] < number1) {
+                        l = m + 1;
+                    } else if (matrixPrimes[m] > number1) {
+                        r = m - 1;
+                    } else {
+                        isPrimeBig = true;
+                        break;
+                    }
+                }
+                if (isPrimeBig == false) {
+                    continue;
+                }
+                l = 0;
+                m = 0;
+                r = howManyPrimes;
+                isPrimeBig = false;
+                if (number == 1){
+                    continue;
+                }
+                while (l <= r) {
+                    m = (l + r) / 2;
+                    if (matrixPrimes[m] < number2) {
+                        l = m + 1;
+                    } else if (matrixPrimes[m] > number2) {
+                        r = m - 1;
+                    } else {
+                        isPrimeBig = true;
+                        break;
+                    }
+                }
+                if (isPrimeBig == true) {
+                    System.out.println(matrixPrimes[i]);
+                    sum = sum + matrixPrimes[i];
+                    continue;
+                }
+                continue;
+            }
+            for (int j = 0; j <= num.length(); j++){
+                num = num.substring(0,num.length()-1);
+                number = Integer.parseInt(num);
+//                System.out.println(number + "  " + i);
+                l = 0;
+                m = 0;
+                r = howManyPrimes;
+                isPrimeBig = false;
+                if (number == 1){
+                    break;
+                }
+                while (l <= r) {
+                    m = (l + r) / 2;
+                    if (matrixPrimes[m] < number) {
+                        l = m + 1;
+                    } else if (matrixPrimes[m] > number) {
+                        r = m - 1;
+                    } else {
+                        isPrimeBig = true;
+                        break;
+                    }
+                }
+                if (isPrimeBig == false) {
+                    break;
+                }
+
+            }
+            if (isPrimeBig == false){
+                continue;
+            }
+            num = Integer.toString(matrixPrimes[i]);
+            String num2 = num;
+            for (int j = 1; j < num.length(); j++){
+                num2 = num.substring(j, num.length());
+                number = Integer.parseInt(num2);
+//                System.out.println(number + "  " + i);
+                l = 0;
+                m = 0;
+                r = howManyPrimes;
+                isPrimeBig = false;
+                if (number == 1){
+                    break;
+                }
+                while (l <= r) {
+                    m = (l + r) / 2;
+                    if (matrixPrimes[m] < number) {
+                        l = m + 1;
+                    } else if (matrixPrimes[m] > number) {
+                        r = m - 1;
+                    } else {
+                        isPrimeBig = true;
+                        break;
+                    }
+                }
+                if (isPrimeBig == false) {
+                    break;
+                }
+            }
+            if (isPrimeBig){
+                sum = sum + matrixPrimes[i];
+                System.out.println(matrixPrimes[i] + "  " + sum);
+            }
+        }
+    }
+    public static int[] retornaPrimos(int howManyPrimes) {
+        int[] primeMatrix;
+        primeMatrix = new int[howManyPrimes];
+        boolean teste = true;
+        boolean teste2 = false;
+        int cont = 5;
+        int test = 11;
+        primeMatrix[0] = 1;
+        primeMatrix[1] = 2;
+        primeMatrix[2] = 3;
+        primeMatrix[3] = 5;
+        primeMatrix[4] = 7;
+        if (howManyPrimes == 5) {
+            return primeMatrix;
+        }
+        while (true) {
+            teste = true;
+            teste2 = false;
+            if (primeMatrix[cont] > 999999999){
+                System.out.println(cont + "   " + primeMatrix[cont]);
+                break;
+            }
+            for (int j = 1; primeMatrix[j] <= Math.sqrt(test); j++) {
+                if (primeMatrix[j] == 0) {
+                    teste2 = true;
+                    break;
+                }
+                if (test % primeMatrix[j] == 0) {
+                    teste = false;
+                }
+            }
+            if (teste2 == true) {
+                for (int j = 3; j <= Math.sqrt(test); j = j + 2) {
+                    if (test % j == 0) {
+                        teste = false;
+                    }
+                }
+            }
+            if (teste == true) {
+                primeMatrix[cont] = test;
+//                System.out.println(cont);
+                if (cont == howManyPrimes - 1) {
+                    break;
+                }
+                cont++;
+            }
+            test = test + 2;
+        }
+//        System.out.println(primeMatrix[howManyPrimes - 1]);
+        return primeMatrix;
+    }
+    public static boolean primeTest (long prime) {
+        for (long i = 3; i <= Math.sqrt(prime) + 1; i = i + 2){
+            if (prime % i == 0){
+                return false;
+            }
+        }
+        return true;
+    }
+}
