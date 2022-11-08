@@ -1,0 +1,31 @@
+import java.math.BigInteger;
+import java.util.concurrent.TimeUnit;
+
+public class Main {
+
+    public static void main(String[] args) {
+        int cont = 0;
+        BigInteger milion = new BigInteger(Integer.toString(1000000));
+        for (int n = 2; n <= 100; n++){
+            for (int r = n - 1; r >= 1; r--){
+                if (combin(n, r).compareTo(milion) == 1){
+                    cont++;
+                }
+            }
+        }
+        System.out.println(cont);
+    }
+    public static BigInteger combin (int n, int r){
+        BigInteger fatorial = new BigInteger(Integer.toString(n));
+        for (int j = n - 1; j > r; j--){
+            BigInteger factor = new BigInteger(Integer.toString(j));
+            fatorial = fatorial.multiply(factor);
+        }
+        BigInteger fatorialR = new BigInteger(Integer.toString(n - r));
+        for (int j = n - r - 1; j > 0; j--){
+            BigInteger factor = new BigInteger(Integer.toString(j));
+            fatorialR = fatorialR.multiply(factor);
+        }
+        return fatorial.divide(fatorialR);
+    }
+}
