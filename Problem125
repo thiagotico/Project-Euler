@@ -1,0 +1,38 @@
+public class Main {
+
+    public static void main(String[] args) {
+        long tempoInicial = System.currentTimeMillis();
+        long sum = 0;
+        for (int i = 1; i < 100000000; i++){
+            if (palindrome(i) && squares(i)){
+                System.out.println(i);
+                sum = sum + i;
+                System.out.println(sum);
+            }
+        }
+        System.out.println("o metodo executou em " + (System.currentTimeMillis() - tempoInicial));
+    }
+    public static boolean palindrome (int i){
+        String number = Long.toString(i);
+        int k = number.length()-1;
+        for (int j = 0; j < number.length()/2; j++) {
+            if (Long.parseLong(number.substring(j, j + 1)) != Long.parseLong(number.substring(k, k + 1))){
+                return false;
+            }
+            k--;
+        }
+        return true;
+    }
+    public static boolean squares (int i){
+        for (int j = 1; j < Math.sqrt(i); j++){
+            int sum = 0;
+            for (int k = j; sum <= i; k++){
+                sum = sum + k*k;
+                if (sum == i){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}
