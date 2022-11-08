@@ -1,0 +1,22 @@
+public class Main {
+
+    public static void main(String[] args) {
+        long bigPrime = 600851475143L;
+        boolean isPrime = true;
+        long largestDivPrime = 0;
+        for (long i = 3; i <= Math.sqrt(bigPrime); i = i + 2) {
+            for (long j = 3; j <= Math.sqrt(i); j = j + 2) {
+                if (i % j == 0) {
+                    isPrime = false;
+                    break;
+                }
+            }
+            if ((isPrime) & (bigPrime % i == 0)) {
+                largestDivPrime = i;
+                isPrime = true;
+            }
+            isPrime = true;
+        }
+        System.out.println(largestDivPrime);
+    }
+}
