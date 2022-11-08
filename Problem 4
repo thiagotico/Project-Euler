@@ -1,0 +1,26 @@
+public class Main {
+
+    public static void main(String[] args) {
+        int largestPal = 0;
+	    for (int i = 100; i <= 999; i++){
+	        for (int j = 100; j <= 999; j++){
+	            if (palindrome(i*j) && (largestPal < i*j)){
+	                largestPal = i*j;
+                }
+            }
+        }
+        System.out.println(largestPal);
+    }
+
+    public static boolean palindrome (int i){
+        String num = Integer.toString(i);
+        String numRev = "";
+        for (int j = num.length(); j >= 1; j--){
+            numRev = numRev + num.substring(j-1, j);
+        }
+        if (numRev.equals(num)){
+            return true;
+        }
+        return false;
+    }
+}
