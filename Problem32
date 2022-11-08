@@ -1,0 +1,71 @@
+import java.util.Arrays;
+
+public class Main {
+
+    static int [] matrix = new int[1000];
+    static int cont = 0;
+    public static void main(String[] args) {
+        range(1, 9999, 1,9999);
+        System.out.println(removeDup());
+    }
+    public static void range (int num1, int num1End, int num2, int num2End){
+        for (int i = num1; i <= num1End; i++){
+            for (int j = num2; j <= num2End; j++){
+                int temp = i*j;
+                String num = Integer.toString(temp) + i + j;
+                if (num.length() > 9 || num.length() < 9){
+                    continue;
+                }
+                temp = Integer.parseInt(num);
+                if (isPan(temp)){
+                    System.out.println("i = " + i + " j = " + j + " i * j = " + i*j);
+                    matrix[cont] = i*j;
+                    cont++;
+                }
+            }
+        }
+    }
+    public static int removeDup (){
+        Arrays.sort(matrix);
+        int cont = 0;
+        for (int i = 0; i < matrix.length; i++){
+            if (i < matrix.length-1) {
+                if (matrix[i] == matrix[i + 1]) {
+                    continue;
+                } else {
+                    cont = cont + matrix[i];
+                }
+            }
+        }
+        if (matrix[matrix.length - 3] != matrix[matrix.length-2]) {
+            cont = cont + matrix[matrix.length-2];
+        }
+        if (matrix[matrix.length - 2] != matrix[matrix.length-1]) {
+            cont = cont + matrix[matrix.length-1];
+        }
+        return cont;
+    }
+    public static boolean isPan (int i){
+        boolean flag = false;
+        long number = 0;
+        int cont = 0;
+        int[] decimals = new int[Integer.toString(i).length()];
+        number = i;
+        for (int j = 0; j < 11; j++) {
+            cont = j;
+            decimals[j] = (int) (number % 10);
+            number = number / 10;
+            if (number == 0) {
+                break;
+            }
+        }
+        boolean ordem = true;
+        Arrays.sort(decimals);
+        for (int j = 0; j <= cont; j++) {
+            if (decimals[j] != j + 1) {
+                ordem = false;
+            }
+        }
+        return ordem;
+    }
+}
