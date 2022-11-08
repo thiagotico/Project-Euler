@@ -1,0 +1,90 @@
+import java.util.Arrays;
+
+public class Main {
+    static int howManyPrimes = 78500;
+    static int size = howManyPrimes - 1;
+    static int[] matrixPrimes = retornaPrimos(howManyPrimes);
+    static int cont = 0;
+    static int total = 0;
+    public static void main(String args[]) {
+        for (int i = 1; i < howManyPrimes; i++){
+            if (circular(matrixPrimes[i])){
+                cont++;
+            }
+        }
+        System.out.println(cont);
+    }
+
+    public static boolean circular (int number){
+        String circular = Integer.toString(number);
+        int circInt = 0;
+        for (int i = 0; i < circular.length(); i++){
+            if (Integer.parseInt(circular.substring(i, i + 1)) == 0){
+                return false;
+            }
+        }
+        for (int i = 0; i < circular.length(); i++){
+            circular = circular.substring(1) + circular.substring(0,1);
+            circInt = Integer.parseInt(circular);
+            if (Arrays.binarySearch(matrixPrimes, circInt) < 0){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static int[] retornaPrimos(int howManyPrimes) {
+        int[] primeMatrix;
+        primeMatrix = new int[howManyPrimes];
+        boolean teste = true;
+        boolean teste2 = false;
+        int cont = 5;
+        int test = 11;
+        primeMatrix[0] = 1;
+        primeMatrix[1] = 2;
+        primeMatrix[2] = 3;
+        primeMatrix[3] = 5;
+        primeMatrix[4] = 7;
+        if (howManyPrimes == 5) {
+            return primeMatrix;
+        }
+        while (true) {
+            teste = true;
+            teste2 = false;
+            if (primeMatrix[cont] > 999999999){
+//                System.out.println(cont + "   " + primeMatrix[cont]);
+                break;
+            }
+            for (int j = 1; primeMatrix[j] <= Math.sqrt(test); j++) {
+                if (primeMatrix[j] == 0) {
+                    teste2 = true;
+                    break;
+                }
+                if (test % primeMatrix[j] == 0) {
+                    teste = false;
+                }
+            }
+            if (teste2 == true) {
+                for (int j = 3; j <= Math.sqrt(test); j = j + 2) {
+                    if (test % j == 0) {
+                        teste = false;
+                    }
+                }
+            }
+            if (teste == true) {
+                if (test > 1000000){
+//                    System.out.println("cont = " + cont + " " + test);
+                }
+                primeMatrix[cont] = test;
+//                System.out.println(cont);
+                if (cont == howManyPrimes - 1) {
+                    break;
+                }
+                cont++;
+            }
+            test = test + 2;
+        }
+//        System.out.println(primeMatrix[howManyPrimes - 1]);
+        return primeMatrix;
+    }
+}
