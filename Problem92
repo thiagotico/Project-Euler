@@ -1,0 +1,26 @@
+public class Main {
+
+    public static void main(String[] args) {
+        int num = 0;
+        int sum = 0;
+        for (int i = 1; i <= 10000000; i++){
+            num = i;
+            while (true) {
+                String number = Integer.toString(num);
+                num = 0;
+                for (int j = 0; j < number.length(); j++) {
+                    num = num + Integer.parseInt(number.substring(j, j + 1)) * Integer.parseInt(number.substring(j, j + 1));
+                }
+                if (num == 1) {
+                    break;
+                }
+                if (num == 89){
+                    System.out.println(i);
+                    sum = sum + 1;
+                    break;
+                }
+            }
+        }
+        System.out.println(sum);
+    }
+}
