@@ -1,0 +1,103 @@
+public class Main {
+
+    public static void main(String[] args) {
+        int howManyPrimes = 1000000;
+        int[] matrixPrimes = retornaPrimos(howManyPrimes);
+        int[] divisores = new int[50];
+        int number = 0;
+        for (int i = 10; i <= 1000000; i++){
+            boolean flagCont4 = true;
+            for (int j = 0; j < 50; j++){
+                divisores[j] = 0;
+            }
+            int contMatrix = 1;
+            boolean distinct = true;
+            for (int j = 0; j < 4; j ++){
+                number = i + j;
+                int cont = 1;
+                int cont4 = 0;
+                while (number != 1){
+                    if (number % matrixPrimes[cont] == 0){
+                        number = number / matrixPrimes[cont];
+                        if (divisores[contMatrix - 1] != matrixPrimes[cont]){
+                            divisores[contMatrix] = matrixPrimes[cont];
+//                            System.out.println(divisores[contMatrix]);
+                            contMatrix ++;
+                            cont4 ++;
+                            if (cont4 > 4){
+                                break;
+                            }
+                        }
+                    }else{
+                        cont ++;
+                    }
+                }
+                if (cont4 != 4){
+                    flagCont4 = false;
+                    break;
+                }
+            }
+            if (flagCont4 == false){
+                continue;
+            }
+            for (int j = 1; j < 46; j = j + 4){
+                for (int w = 1; w < 5; w++){
+                    if ((divisores[w + j] == divisores[j]) && (w != j) && (divisores[w + j] != 0)){
+//                        System.out.println("divisores[w] = " + divisores[w] + "divisores[j] = " + divisores[j]);
+                        distinct = false;
+                    }
+                }
+            }
+            if (distinct == true){
+                System.out.println(i);
+            }
+        }
+    }
+    public static int[] retornaPrimos(int howManyPrimes) {
+        int[] primeMatrix;
+        primeMatrix = new int[howManyPrimes];
+        boolean teste = true;
+        boolean teste2 = false;
+        int cont = 5;
+        int test = 11;
+        primeMatrix[0] = 1;
+        primeMatrix[1] = 2;
+        primeMatrix[2] = 3;
+        primeMatrix[3] = 5;
+        primeMatrix[4] = 7;
+        if (howManyPrimes == 5) {
+            return primeMatrix;
+        }
+        while (true) {
+            teste = true;
+            teste2 = false;
+            for (int j = 1; primeMatrix[j] <= Math.sqrt(test); j++) {
+                if (primeMatrix[j] == 0) {
+                    teste2 = true;
+                    break;
+                }
+                if (test % primeMatrix[j] == 0) {
+                    teste = false;
+                }
+            }
+            if (teste2 == true) {
+                for (int j = 3; j <= Math.sqrt(test); j = j + 2) {
+                    if (test % j == 0) {
+                        teste = false;
+                    }
+                }
+            }
+            if (teste == true) {
+                primeMatrix[cont] = test;
+//                System.out.println(cont);
+                if (cont == howManyPrimes - 1) {
+                    break;
+                }
+                cont++;
+            }
+            test = test + 2;
+        }
+//        System.out.println(primeMatrix[howManyPrimes - 1]);
+        return primeMatrix;
+    }
+}
