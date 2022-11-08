@@ -1,0 +1,47 @@
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+public class Main {
+
+    public static void main(String[] args) {
+	    BigInteger [] numbers = new BigInteger[10000];
+	    int cont = 0;
+	    int total = 0;
+	    for (int i = 2; i <= 100; i++){
+	        for (int j = 2; j <= 100; j++){
+	            numbers[cont] = number(i, j);
+//                System.out.println(number(i, j));
+                cont++;
+            }
+        }
+	    cont = cont - 1;
+        List<BigInteger> bigInterList = new ArrayList<BigInteger>();
+	    for (int i = 0; i <= cont; i++){
+            bigInterList.add(numbers[i]);
+        }
+        Collections.sort(bigInterList);
+	    for (int i = 0; i < cont; i++){
+	        BigInteger j = bigInterList.get(i);
+            BigInteger k = bigInterList.get(i+1);
+	        if (j.equals(k)){
+	            continue;
+            }
+	        total++;
+            System.out.println(j);
+        }
+	    total++;
+        System.out.println(total);
+    }
+
+    public static BigInteger number (int rad, int pow){
+        BigInteger number = new BigInteger(Integer.toString(rad));
+        BigInteger rad1 = new BigInteger(Integer.toString(rad));
+        for (int k = 2; k <= pow; k++){
+            number = number.multiply(rad1);
+        }
+        return number;
+    }
+}
