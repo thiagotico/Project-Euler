@@ -1,0 +1,140 @@
+import java.sql.Connection;
+
+public class Main {
+
+    public static void main(String[] args) {
+        int howManyPrimes = 10000;
+        int size2 = howManyPrimes - 1;
+        int[] matrixPrimes = retornaPrimos(howManyPrimes);
+        int len = 0;
+        double sum = 0;
+        double size = 0;
+        double ratio = 0;
+        boolean prime = false;
+        double sum2 = 0;
+        System.out.println(matrixPrimes[9998]);
+        System.out.println(matrixPrimes[size2]);
+	    for (int i = 2; i <= 1000000; i++){
+	        size = 4 * (i - 1) + 1;
+	        len = (i - 1) * 2 + 1;
+	        int eq1 = 4 * i * i - 10 * i + 7;
+	        int eq2 = 4 * i * i - 6 * i + 3;
+	        int eq3 = 4 * i * i - 8 * i + 5;
+	        int eq4 = i * i;
+	        prime = true;
+	        sum2 = sum;
+            for (int j = 1; matrixPrimes[j] <= Math.sqrt(eq1); j++){
+                if (matrixPrimes[size2] < Math.sqrt(eq1)){
+                    System.out.println("Ultrapassou no número " + eq1);
+                    break;
+                }
+                if (eq1 % matrixPrimes[j] == 0){
+                    prime = false;
+                }
+            }
+            if (prime){
+                System.out.println(eq1);
+                sum++;
+            }
+            prime = true;
+            for (int j = 1; matrixPrimes[j] <= Math.sqrt(eq2); j++){
+                if (matrixPrimes[size2] < Math.sqrt(eq2)){
+                    System.out.println("Ultrapassou no número " + Math.sqrt(eq2));
+                    break;
+                }
+                if (eq2 % matrixPrimes[j] == 0){
+                    prime = false;
+                }
+            }
+            if (prime){
+                System.out.println(eq2);
+                sum++;
+            }
+            prime = true;
+            for (int j = 1; matrixPrimes[j] <= Math.sqrt(eq3); j++){
+                if (matrixPrimes[size2] < Math.sqrt(eq3)){
+                    System.out.println("Ultrapassou no número " + Math.sqrt(eq3));
+                    break;
+                }
+                if (eq3 % matrixPrimes[j] == 0){
+                    prime = false;
+                }
+            }
+            if (prime){
+                System.out.println(eq3);
+                sum++;
+            }
+            prime = true;
+            for (int j = 1; matrixPrimes[j] <= Math.sqrt(eq4); j++){
+                if (matrixPrimes[size2] < Math.sqrt(eq4)){
+                    System.out.println("Ultrapassou no número " + Math.sqrt(eq4));
+                    break;
+                }
+                if (eq4 % matrixPrimes[j] == 0){
+                    prime = false;
+                }
+            }
+            if (prime){
+                System.out.println(eq4);
+                sum++;
+            }
+            ratio = sum / size;
+            if (ratio < 0.1){
+                System.out.println("size = " + size + " ratio = " + ratio + " len = " + len + " sum = " + sum);
+                break;
+            }
+            System.out.println("size = " + size + " ratio = " + ratio + " len = " + len + " sum = " + sum);
+        }
+    }
+    public static int[] retornaPrimos(int howManyPrimes) {
+        int[] primeMatrix;
+        primeMatrix = new int[howManyPrimes];
+        boolean teste = true;
+        boolean teste2 = false;
+        int cont = 5;
+        int test = 11;
+        primeMatrix[0] = 1;
+        primeMatrix[1] = 2;
+        primeMatrix[2] = 3;
+        primeMatrix[3] = 5;
+        primeMatrix[4] = 7;
+        if (howManyPrimes == 5) {
+            return primeMatrix;
+        }
+        while (true) {
+            teste = true;
+            teste2 = false;
+            if (primeMatrix[cont] > 999999999){
+                System.out.println(cont + "   " + primeMatrix[cont]);
+                break;
+            }
+            for (int j = 1; primeMatrix[j] <= Math.sqrt(test); j++) {
+                if (primeMatrix[j] == 0) {
+                    teste2 = true;
+                    break;
+                }
+                if (test % primeMatrix[j] == 0) {
+                    teste = false;
+                }
+            }
+            if (teste2 == true) {
+                for (int j = 3; j <= Math.sqrt(test); j = j + 2) {
+                    if (test % j == 0) {
+                        teste = false;
+                    }
+                }
+            }
+            if (teste == true) {
+                primeMatrix[cont] = test;
+//                System.out.println(cont);
+                if (cont == howManyPrimes - 1) {
+                    break;
+                }
+                cont++;
+            }
+            test = test + 2;
+        }
+//        System.out.println(primeMatrix[howManyPrimes - 1]);
+        return primeMatrix;
+    }
+}
