@@ -1,0 +1,36 @@
+public class Main {
+
+    public static void main(String[] args) {
+        int pent1 = 0;
+        int pent2 = 0;
+        int D = 0;
+        int veriD = 10000000;
+        for (int i = 1; i < 3000; i++){
+//            System.out.println(i);
+            pent1 = i*(3*i -1)/2;
+            for (int j = i; j < 3000; j++){
+                pent2 = j*(3*j -1)/2;
+                if (i == j){
+                    continue;
+                }
+                int modulo = pent1 - pent2;
+                if (modulo < 0){
+                    modulo = modulo * -1;
+                }
+                int p = modulo;
+                double n = ((1 + (Math.sqrt(1 + 24 * p)))/6);
+                int n1 = (int) ((1 + (Math.sqrt(1 + 24 * p)))/6);
+                if (n/n1 == 1) {
+                    p = pent1 + pent2;
+                    n = ((1 + (Math.sqrt(1 + 24 * p))) / 6);
+                    n1 = (int) ((1 + (Math.sqrt(1 + 24 * p))) / 6);
+                    if ((n / n1 == 1) && (modulo < veriD)) {
+                        veriD = modulo;
+                        System.out.println("pent1 = " + pent1 + " pent2 " + pent2 + " i = " + i + " j = " + j + " n = " + n);
+                    }
+                }
+            }
+        }
+        System.out.println(veriD);
+    }
+}
