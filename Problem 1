@@ -1,0 +1,10 @@
+public class Main {
+
+    public static void main(String[] args) {
+        int mul3 = (999 + 3) * (999 / 3) / 2;
+        int mul5 = (995 + 5) * (995 / 5) / 2;
+        int mul15 = (990 + 15) * (990 / 15) / 2;
+
+        System.out.println(mul3 + mul5 - mul15);
+    }
+}
