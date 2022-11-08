@@ -1,0 +1,113 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class Main {
+    public static void main(String [] args) {
+        int[] sum = new int [61];
+        for (int i = 1; i <= 100; i++){
+            int [] number = number(i);
+            int cont = 48;
+            int add = 0;
+            int temp = sum[60];
+            if (sum[60] + number[49] >= 10){
+                sum[60] = sum[60] + number[49] - 10;
+                add = 1;
+            }else {
+                sum[60] = sum[60] + number[49];
+                add = 0;
+            }
+            for (int j = 60; j >= 1; j--){
+                if (cont < 0){
+                    if (sum[j] + add >= 10) {
+                        sum[j] = sum[j] + add - 10;
+                        add = 1;
+                    }else{
+                        sum[j] = sum[j] + add;
+                        add = 0;
+                    }
+                    if (sum[j] == 0 && add == 0){
+                        break;
+                    }
+                    continue;
+                }
+                if (sum[j] + number[cont] + add >= 10){
+                    sum[j] = sum[j] + number[cont] + add - 10;
+                    add = 1;
+                }else{
+                    sum[j] = sum[j] + number[cont] + add;
+                    add = 0;
+                }
+                cont--;
+            }
+        }
+        print(sum);
+    }
+
+    public static void print (int [] number){
+        String num = "";
+        boolean begin = true;
+        for (int i = 0; i <= 60; i++){
+            if (number[i] != 0){
+                begin = false;
+            }
+            if (begin && number[i] == 0){
+                continue;
+            }
+            num = num + number[i];
+        }
+        System.out.println(num);
+    }
+    public static int[] number (int j){
+        int number [] = new int [50];
+        int k = 0;
+        for (int i = 0; i < 50; i++){
+            number [k] = Integer.parseInt(retornaMatrix(j).substring(i, i+1));
+            k++;
+        }
+        return number;
+    }
+    public static String retornaMatrix (int i) {
+
+        // The name of the file to open.
+        String fileName = "temp.txt";
+
+        // This will reference one line at a time
+        String line = null;
+
+        try {
+            // FileReader reads text files in the default encoding.
+            FileReader fileReader =
+                    new FileReader(fileName);
+
+            // Always wrap FileReader in BufferedReader.
+            BufferedReader bufferedReader =
+                    new BufferedReader(fileReader);
+            int cont = 1;
+            while((line = bufferedReader.readLine()) != null) {
+                if (cont == i){
+                    return line;
+                }
+
+                cont ++;
+            }
+
+            // Always close files.
+            bufferedReader.close();
+        }
+        catch(FileNotFoundException ex) {
+            System.out.println(
+                    "Unable to open file '" +
+                            fileName + "'");
+        }
+        catch(IOException ex) {
+            System.out.println(
+                    "Error reading file '"
+                            + fileName + "'");
+            // Or we could just do this:
+            // ex.printStackTrace();
+        }
+        return "-1";
+    }
+}
