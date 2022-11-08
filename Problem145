@@ -1,0 +1,39 @@
+
+public class Main {
+
+    public static void main(String[] args) {
+        long sum = 0;
+        for (long i = 1; i <= 99999999; i++){
+//            System.out.println(i);
+            if (i % 10 == 0){
+                continue;
+            }
+            if (verifyOdd(reverseNumber(i))){
+                System.out.println(i);
+                sum ++;
+            }
+        }
+        System.out.println(sum);
+    }
+
+
+    public static long reverseNumber (long i){
+        String number = Long.toString(i);
+        String num = "";
+        for (int j = number.length() - 1; j >= 0; j--) {
+            num = num + (number.substring(j, j + 1));
+        }
+        long numInt = Long.parseLong(num);
+        long sum = i + numInt;
+        return sum;
+    }
+    public static boolean verifyOdd (long i){
+        String number = Long.toString(i);
+        for (int j = 0; j < number.length(); j++) {
+            if (Long.parseLong(number.substring(j, j + 1)) % 2 == 0){
+                return false;
+            }
+        }
+        return true;
+    }
+}
