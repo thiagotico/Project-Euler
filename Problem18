@@ -1,0 +1,99 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class Main {
+    public static void main(String[] args) {
+        int matrix[][] = returnMatrix(16, 16);
+        int sum = 0;
+        int max = 0;
+        int cont = 1;
+        imprimeMatrix(matrix);
+        for (int i = 14; i >= 1; i--){
+            for (int j = 0; j <= i-1; j++){
+                if (matrix[i][j] > matrix[i][j+1]){
+                    matrix[i-1][j] = matrix[i-1][j] + matrix[i][j];
+                }else {
+                    matrix[i-1][j] = matrix[i-1][j] + matrix[i][j+1];
+                }
+            }
+        }
+        System.out.println(matrix[0][0]);
+    }
+    public static void imprimeMatrix(int matrix [][]){
+        for (int i = 0; i <= 14; i++) {
+            String line = "";
+            for (int j = 0; j <= 15; j++) {
+                if (matrix[i][j] != 0){
+                    if (matrix[i][j] < 10) {
+                        line = line + 0 + matrix[i][j] + " ";
+                    } else {
+                        line = line + matrix[i][j] + " ";
+                    }
+                }else {
+                    System.out.println(line);
+                    break;
+                }
+            }
+        }
+    }
+
+    public static int [][] returnMatrix(int i, int j){
+        int matrixNum [][] = new int[i][j];
+        for (i = 15; i > 0; i--){
+            for (j = i; j > 0; j--){
+                matrixNum [i-1][j-1] = retornaNumero(i, j);
+            }
+        }
+        return matrixNum;
+    }
+
+    public static int retornaNumero (int vertical, int horizontal){
+        horizontal = horizontal - 1;
+        horizontal = horizontal * 3;
+        return Integer.parseInt(retornaMatrix(vertical).substring(horizontal, horizontal + 2));
+    }
+    public static String retornaMatrix (int i) {
+
+        // The name of the file to open.
+        String fileName = "temp.txt";
+
+        // This will reference one line at a time
+        String line = null;
+
+        try {
+            // FileReader reads text files in the default encoding.
+            FileReader fileReader =
+                    new FileReader(fileName);
+
+            // Always wrap FileReader in BufferedReader.
+            BufferedReader bufferedReader =
+                    new BufferedReader(fileReader);
+            int cont = 1;
+            while((line = bufferedReader.readLine()) != null) {
+                if (cont == i){
+                    return line;
+                }
+
+                cont ++;
+            }
+
+            // Always close files.
+            bufferedReader.close();
+        }
+        catch(FileNotFoundException ex) {
+            System.out.println(
+                    "Unable to open file '" +
+                            fileName + "'");
+        }
+        catch(IOException ex) {
+            System.out.println(
+                    "Error reading file '"
+                            + fileName + "'");
+            // Or we could just do this:
+            // ex.printStackTrace();
+        }
+        return "-1";
+    }
+}
