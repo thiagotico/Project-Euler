@@ -1,0 +1,33 @@
+import java.math.BigInteger;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        // Creating a BigInteger object
+        BigInteger big, squareRoot;
+
+        big = new BigInteger("17");
+
+        // calculate square root o bigInteger
+        // using sqrt() method
+        squareRoot = sqrt(big);
+
+        // print result
+        System.out.println("Sqaure root value of BigInteger " + big
+                + " is " + squareRoot);
+    }
+    public static BigInteger sqrt(BigInteger x) {
+        BigInteger div = BigInteger.ZERO.setBit(x.bitLength()/2);
+        BigInteger div2 = div;
+        // Loop until we hit the same value twice in a row, or wind
+        // up alternating.
+        for(;;) {
+            BigInteger y = div.add(x.divide(div)).shiftRight(1);
+            if (y.equals(div) || y.equals(div2))
+                return y;
+            div2 = div;
+            div = y;
+        }
+    }
+}
