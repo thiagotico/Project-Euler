@@ -1,0 +1,55 @@
+public class Main {
+
+    public static void main(String[] args) {
+        int totalDays = 0;
+        int days = 2;
+	    for (int i = 1901; i <= 2000; i++){
+            for (int cont = 1; cont <= 12; cont++) {
+                if (cont == 4 || cont == 6 || cont == 9 || cont == 11) {
+                    for (int j = 1; j <= 30; j++) {
+                        if (days == 7) {
+                            days = 0;
+                            if (j == 1) {
+                                totalDays++;
+                            }
+                        }
+                        days++;
+                    }
+                } else if (cont == 2) {
+                    if (i % 4 == 0) {
+                        for (int j = 1; j <= 29; j++) {
+                            if (days == 7) {
+                                days = 0;
+                                if (j == 1) {
+                                    totalDays++;
+                                }
+                            }
+                            days++;
+                        }
+                    } else {
+                        for (int j = 1; j <= 28; j++) {
+                            if (days == 7) {
+                                days = 0;
+                                if (j == 1) {
+                                    totalDays++;
+                                }
+                            }
+                            days++;
+                        }
+                    }
+                } else {
+                    for (int j = 1; j <= 31; j++) {
+                        if (days == 7) {
+                            days = 0;
+                            if (j == 1) {
+                                totalDays++;
+                            }
+                        }
+                        days++;
+                    }
+                }
+            }
+        }
+        System.out.println(totalDays);
+    }
+}
