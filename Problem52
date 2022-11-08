@@ -1,0 +1,51 @@
+import java.util.Arrays;
+
+public class Main {
+
+    public static void main(String[] args) {
+        long i = 1;
+        boolean flag = false;
+        while (!flag){
+            i ++;
+            long matrix[][] = new long [6][Long.toString(i).length()];
+            matrix[0] = numberToArray(Long.toString(i));
+            for (int j = 2; j <= 6; j++){
+                String num1 = Long.toString(i*(j - 1));
+                String num2 = Long.toString(i*(j));
+                if (num1.length() != num2.length()){
+                    break;
+                }
+                matrix[j-1] = numberToArray(num1);
+                if (j == 6 && compare(matrix)){
+                    System.out.println(i);
+                    flag = true;
+                }
+            }
+        }
+    }
+    public static void print (long [][] matrix, int pos){
+        for (int i = 0; i < matrix[pos].length; i++){
+            System.out.println(matrix[pos][i]);
+        }
+    }
+    public static long[] numberToArray(String number){
+        long array [] = new long[number.length()];
+        for (int i = 0; i < number.length(); i ++){
+            array[i] = Long.parseLong(number.substring(i, i + 1));
+        }
+        return array;
+    }
+    public static boolean compare (long[][] matrix){
+        for (int i = 0; i < 6; i++){
+            Arrays.sort(matrix[i]);
+        }
+        for (int i = 0; i < 5; i++){
+            for (int j = 0; j < matrix[i].length; j++){
+                if (matrix[i][j] != matrix[i+1][j]){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
