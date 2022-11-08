@@ -1,0 +1,49 @@
+public class Main<howManyPrimes> {
+    private static final int biggestPrime = 2000000;
+    private static final int howManyPrimes = 2000000;
+    public static int[] primes = new int[howManyPrimes + 1];
+    public static void main(String[] args) {
+        primes[0] = 1;
+        primes[1] = 2;
+        primes[2] = 3;
+        primes[3] = 5;
+        primes[4] = 7;
+        int j = 5;
+        for (int i = 11; primes[howManyPrimes] == 0; i = i + 2){
+            if (isPrime(i)){
+                primes[j] = i;
+                if (biggestPrime != 0) {
+                    if (primes[j] > biggestPrime) {
+                        primes[j] = 0;
+                        break;
+                    }
+                }
+                j++;
+            }
+        }
+        long sum = 0;
+        for (int i = 1; i <= howManyPrimes; i++){
+            sum = sum + primes[i];
+        }
+        System.out.println(sum);
+    }
+    public static boolean isPrime (int test){
+        if (test % 2 == 0){
+            return false;
+        }
+        for (int i = 1; primes [i] <= Math.sqrt(test); i++) {
+            if (primes[i] == 0){
+                for (int j = 3; j <= Math.sqrt(test); j = j + 2) {
+                    if (test % j == 0){
+                        return false;
+                    }
+                }
+                return true;
+            }
+            if (test % primes[i] == 0){
+                return false;
+            }
+        }
+        return true;
+    }
+}
