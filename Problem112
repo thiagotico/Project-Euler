@@ -1,0 +1,37 @@
+public class Main {
+
+    public static void main(String[] args) {
+        double sum = 0;
+        for (double i = 100; i <= 5000000; i++){
+//            System.out.println(i);
+            if (verifyBouncy((int)i)){
+                sum ++;
+                System.out.println(i);
+//                System.out.println(100*(sum/i));
+                if (100*(sum/i) == 99){
+                    System.out.println(i);
+                    break;
+                }
+            }
+        }
+    }
+    public static boolean verifyBouncy (long i){
+        String number = Long.toString(i);
+        boolean increasing = true;
+        boolean decreasing = true;
+        for (int j = 0; j < number.length() - 1; j++) {
+            if (Integer.parseInt(number.substring(j, j + 1)) > Integer.parseInt(number.substring(j + 1, j + 2))){
+                increasing = false;
+            }
+        }
+        for (int j = 0; j < number.length() - 1; j++) {
+            if (Integer.parseInt(number.substring(j, j + 1)) < Integer.parseInt(number.substring(j + 1, j + 2))){
+                decreasing = false;
+            }
+        }
+        if (!increasing && !decreasing){
+            return true;
+        }
+        return false;
+    }
+}
